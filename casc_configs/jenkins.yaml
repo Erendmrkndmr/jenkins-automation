@@ -5,24 +5,6 @@ jenkins:
       users:
         - id: "admin"
           password: "admin1234"
-
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
-
-jobs:
-  - script: >
-      job('build-static-site') {
-        description('Build and run static site')
-        scm {
-          git('https://github.com/Erendmrkndmr/automated-portfolio-static-site.git')
-        }
-        steps {
-          shell('''
-            docker stop static-site || true
-            docker rm static-site || true
-            docker build -t static-site .
-            docker run -d --name static-site -p 80:80 static-site
-          ''')
-        }
-      }
