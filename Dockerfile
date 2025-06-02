@@ -2,10 +2,10 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-
 ARG DOCKER_GID=992
+
 RUN apt-get update && apt-get install -y git docker.io \
-    && groupadd -g ${DOCKER_GID} docker \
+    && groupmod -g ${DOCKER_GID} docker || groupadd -g ${DOCKER_GID} docker \
     && usermod -aG docker jenkins
 
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
