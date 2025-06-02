@@ -19,17 +19,17 @@ if (jenkins != null) {
         job.setScm(gitSCM)
 
         def shell = new Shell('''
-            docker stop static-site || true
-            docker rm static-site || true
-            docker rmi static-site || true
+docker stop static-site || true
+docker rm static-site || true
+docker rmi static-site || true
 
-            cat <<EOF > Dockerfile
-            FROM nginx:alpine
-            COPY . /usr/share/nginx/html
-            EOF
+cat <<EOF > Dockerfile
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+EOF
 
-            docker build -t static-site .
-            docker run -d --name static-site --network host static-site
+docker build -t static-site .
+docker run -d --name static-site --network host static-site
         ''')
 
         job.getBuildersList().add(shell)
